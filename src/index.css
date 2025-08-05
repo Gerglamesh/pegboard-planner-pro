@@ -46,7 +46,7 @@
     --tool-rubber: 25 15% 25%; /* Rubber grips */
     
     /* Grid and interaction */
-    --grid-line: 0 0% 30%;
+    --grid-line: 0 0% 15%;
     --drop-zone: 35 90% 50%;
     --selection-box: 200 80% 60%;
     
