@@ -36,9 +36,9 @@
     --ring: 15 80% 55%;
 
     /* Pegboard specific colors */
-    --pegboard: 220 30% 25%; /* Blue pegboard surface */
-    --pegboard-hole: 220 35% 15%; /* Blue peg holes */
-    --pegboard-shadow: 220 40% 8%; /* Deep blue shadows */
+    --pegboard: 220 25% 65%; /* Light blue pegboard surface */
+    --pegboard-hole: 220 30% 55%; /* Blue peg holes */
+    --pegboard-shadow: 220 35% 45%; /* Blue shadows */
     
     /* Tool colors */
     --tool-metal: 220 8% 70%; /* Metal tools */
@@ -52,7 +52,7 @@
     
     /* Gradients and effects */
     --gradient-tool: linear-gradient(135deg, hsl(var(--tool-metal)), hsl(220 10% 60%));
-    --gradient-pegboard: linear-gradient(135deg, hsl(220 30% 20%), hsl(220 30% 30%));
+    --gradient-pegboard: linear-gradient(135deg, hsl(220 25% 60%), hsl(220 25% 70%));
     --shadow-tool: 0 4px 12px hsl(25 20% 6% / 0.4);
     --shadow-elevated: 0 8px 24px hsl(25 20% 6% / 0.6);
 
