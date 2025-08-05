@@ -2,39 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Workshop-themed design system for pegboard tool organizer */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Workshop color palette */
+    --background: 25 15% 8%; /* Dark workshop background */
+    --foreground: 25 10% 92%; /* Light text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 25 12% 12%; /* Tool panel background */
+    --card-foreground: 25 8% 88%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 25 12% 12%;
+    --popover-foreground: 25 8% 88%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 15 80% 55%; /* Tool orange */
+    --primary-foreground: 25 15% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 25 8% 18%; /* Dark secondary */
+    --secondary-foreground: 25 8% 88%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 25 8% 15%;
+    --muted-foreground: 25 6% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 35 90% 50%; /* Workshop yellow accent */
+    --accent-foreground: 25 15% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 60%; /* Red for delete */
+    --destructive-foreground: 25 15% 8%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 25 8% 22%;
+    --input: 25 8% 18%;
+    --ring: 15 80% 55%;
+
+    /* Pegboard specific colors */
+    --pegboard: 25 12% 20%; /* Pegboard surface */
+    --pegboard-hole: 25 15% 12%; /* Peg holes */
+    --pegboard-shadow: 25 20% 6%; /* Deep shadows */
+    
+    /* Tool colors */
+    --tool-metal: 220 8% 70%; /* Metal tools */
+    --tool-handle: 15 80% 55%; /* Tool handles */
+    --tool-rubber: 25 15% 25%; /* Rubber grips */
+    
+    /* Grid and interaction */
+    --grid-line: 25 8% 25%;
+    --drop-zone: 35 90% 50%;
+    --selection-box: 200 80% 60%;
+    
+    /* Gradients and effects */
+    --gradient-tool: linear-gradient(135deg, hsl(var(--tool-metal)), hsl(220 10% 60%));
+    --gradient-pegboard: radial-gradient(circle at 50% 50%, hsl(var(--pegboard)), hsl(25 15% 18%));
+    --shadow-tool: 0 4px 12px hsl(25 20% 6% / 0.4);
+    --shadow-elevated: 0 8px 24px hsl(25 20% 6% / 0.6);
 
     --radius: 0.5rem;
 

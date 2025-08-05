@@ -61,7 +61,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Pegboard-specific colors
+				pegboard: {
+					DEFAULT: 'hsl(var(--pegboard))',
+					hole: 'hsl(var(--pegboard-hole))',
+					shadow: 'hsl(var(--pegboard-shadow))'
+				},
+				tool: {
+					metal: 'hsl(var(--tool-metal))',
+					handle: 'hsl(var(--tool-handle))',
+					rubber: 'hsl(var(--tool-rubber))'
+				},
+				grid: 'hsl(var(--grid-line))',
+				'drop-zone': 'hsl(var(--drop-zone))',
+				'selection-box': 'hsl(var(--selection-box))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
