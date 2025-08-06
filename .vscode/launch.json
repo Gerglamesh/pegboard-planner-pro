@@ -8,7 +8,7 @@
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "run",
-                "dev" // Change "start" to your desired npm script if needed
+                "dev" // Change this to your desired npm script if needed
             ],
             "skipFiles": [
                 "<node_internals>/**"
