@@ -8,6 +8,7 @@ interface PlacedToolProps {
   cellSize: number;
   isSelected: boolean;
   onSelect: (multiSelect: boolean) => void;
+  onDragStart: (tool: Tool) => void;
 }
 
 const getToolIcon = (type: Tool['type']) => {
@@ -32,7 +33,8 @@ export const PlacedTool: React.FC<PlacedToolProps> = ({
   tool,
   cellSize,
   isSelected,
-  onSelect
+  onSelect,
+  onDragStart
 }) => {
   const Icon = getToolIcon(tool.type);
   const toolColorClass = getToolColor(tool.type);
@@ -47,6 +49,7 @@ export const PlacedTool: React.FC<PlacedToolProps> = ({
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData('toolId', tool.id);
     e.dataTransfer.effectAllowed = 'move';
+    onDragStart(tool);
   };
 
   // Calculate tool dimensions

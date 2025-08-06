@@ -5,10 +5,11 @@ import { PlacedTool } from './PlacedTool';
 interface PegboardGridProps {
   pegboardState: PegboardState;
   dragState: DragState;
-  onToolDrop: (position: { x: number; y: number }) => void;
+  onToolDrop: (position: { x: number; y: number }, movingToolId?: string) => void;
   onToolSelect: (toolId: string, multiSelect?: boolean) => void;
   onToolDelete: (toolIds: string[]) => void;
   onDragPreview: (position: { x: number; y: number } | null) => void;
+  onToolDragStart: (tool: Tool) => void;
 }
 
 export const PegboardGrid = forwardRef<HTMLDivElement, PegboardGridProps>(({
@@ -17,7 +18,8 @@ export const PegboardGrid = forwardRef<HTMLDivElement, PegboardGridProps>(({
   onToolDrop,
   onToolSelect,
   onToolDelete,
-  onDragPreview
+  onDragPreview,
+  onToolDragStart
 }, ref) => {
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectionStart, setSelectionStart] = useState<{ x: number; y: number } | null>(null);
@@ -48,8 +50,10 @@ export const PegboardGrid = forwardRef<HTMLDivElement, PegboardGridProps>(({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     const position = getGridPosition(e.clientX, e.clientY);
+    const movingToolId = e.dataTransfer.getData('toolId');
+    
     if (position) {
-      onToolDrop(position);
+      onToolDrop(position, movingToolId || undefined);
     }
     onDragPreview(null);
   }, [getGridPosition, onToolDrop, onDragPreview]);
@@ -235,8 +239,11 @@ export const PegboardGrid = forwardRef<HTMLDivElement, PegboardGridProps>(({
             return false;
           }
           
+          // Get the ID of the tool being dragged if it's an existing tool
+          const draggedToolId = dragState.draggedTool?.id;
+          
           const collision = tools.some(existingTool => {
-            if (!existingTool.position) return false;
+            if (!existingTool.position || existingTool.id === draggedToolId) return false;
             
             for (let eRow = 0; eRow < existingTool.shape.length; eRow++) {
               for (let eCol = 0; eCol < existingTool.shape[eRow].length; eCol++) {
@@ -347,6 +354,7 @@ export const PegboardGrid = forwardRef<HTMLDivElement, PegboardGridProps>(({
                 cellSize={cellSize}
                 isSelected={selectedToolIds.includes(tool.id)}
                 onSelect={(multiSelect) => onToolSelect(tool.id, multiSelect)}
+                onDragStart={onToolDragStart}
               />
             )
           ))}

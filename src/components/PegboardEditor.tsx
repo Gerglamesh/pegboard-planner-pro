@@ -61,26 +61,40 @@ export const PegboardEditor: React.FC = () => {
     });
   }, []);
 
-  const handleToolDrop = useCallback((position: { x: number; y: number }) => {
+  const handleToolDrop = useCallback((position: { x: number; y: number }, movingToolId?: string) => {
     if (!dragState.draggedTool) return;
 
     // Check if position is valid (no collisions)
-    if (isValidPosition(dragState.draggedTool, position)) {
-      const newTool: Tool = {
-        ...dragState.draggedTool,
-        id: generateToolId(),
-        position
-      };
+    if (isValidPosition(dragState.draggedTool, position, movingToolId)) {
+      let newState;
+      
+      if (movingToolId) {
+        // Moving existing tool
+        newState = {
+          ...pegboardState,
+          tools: pegboardState.tools.map(tool =>
+            tool.id === movingToolId ? { ...tool, position } : tool
+          )
+        };
+        toast(`${dragState.draggedTool.name} moved`);
+      } else {
+        // Placing new tool
+        const newTool: Tool = {
+          ...dragState.draggedTool,
+          id: generateToolId(),
+          position
+        };
 
-      const newState = {
-        ...pegboardState,
-        tools: [...pegboardState.tools, newTool],
-        selectedToolIds: [newTool.id]
-      };
+        newState = {
+          ...pegboardState,
+          tools: [...pegboardState.tools, newTool],
+          selectedToolIds: [newTool.id]
+        };
+        toast(`${newTool.name} placed on pegboard`);
+      }
 
       setPegboardState(newState);
       saveToHistory(newState);
-      toast(`${newTool.name} placed on pegboard`);
     } else {
       toast("Cannot place tool here - position occupied", { 
         description: "Try a different location" 
@@ -94,7 +108,7 @@ export const PegboardEditor: React.FC = () => {
     });
   }, [dragState.draggedTool, pegboardState, saveToHistory]);
 
-  const isValidPosition = (tool: Tool, position: { x: number; y: number }): boolean => {
+  const isValidPosition = (tool: Tool, position: { x: number; y: number }, excludeToolId?: string): boolean => {
     const { shape } = tool;
     
     // Check grid boundaries
@@ -109,9 +123,9 @@ export const PegboardEditor: React.FC = () => {
             return false;
           }
           
-          // Check for collisions with existing tools
+          // Check for collisions with existing tools (excluding the tool being moved)
           const collision = pegboardState.tools.some(existingTool => {
-            if (!existingTool.position) return false;
+            if (!existingTool.position || existingTool.id === excludeToolId) return false;
             
             for (let eRow = 0; eRow < existingTool.shape.length; eRow++) {
               for (let eCol = 0; eCol < existingTool.shape[eRow].length; eCol++) {
@@ -207,6 +221,7 @@ export const PegboardEditor: React.FC = () => {
             onToolSelect={handleToolSelect}
             onToolDelete={handleToolDelete}
             onDragPreview={(position) => setDragState(prev => ({ ...prev, previewPosition: position }))}
+            onToolDragStart={handleToolDragStart}
           />
         </div>
       </div>
