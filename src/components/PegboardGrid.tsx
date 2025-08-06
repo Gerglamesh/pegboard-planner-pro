@@ -239,11 +239,14 @@ export const PegboardGrid = forwardRef<HTMLDivElement, PegboardGridProps>(({
             return false;
           }
           
-          // Get the ID of the tool being dragged if it's an existing tool
+          // Check collision only if we're not dragging from tools panel
+          // Tools from panel don't have IDs yet, so we only exclude collision with 
+          // the currently dragged tool if it has an ID (existing placed tool)
           const draggedToolId = dragState.draggedTool?.id;
           
           const collision = tools.some(existingTool => {
-            if (!existingTool.position || existingTool.id === draggedToolId) return false;
+            if (!existingTool.position) return false;
+            if (draggedToolId && existingTool.id === draggedToolId) return false;
             
             for (let eRow = 0; eRow < existingTool.shape.length; eRow++) {
               for (let eCol = 0; eCol < existingTool.shape[eRow].length; eCol++) {
