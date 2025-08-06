@@ -68,6 +68,7 @@ export const PegboardEditor: React.FC = () => {
     if (isValidPosition(dragState.draggedTool, position, movingToolId)) {
       let newState;
       
+      // Check if we have a movingToolId - this means we're moving an existing placed tool
       if (movingToolId) {
         // Moving existing tool
         newState = {
@@ -78,7 +79,7 @@ export const PegboardEditor: React.FC = () => {
         };
         toast(`${dragState.draggedTool.name} moved`);
       } else {
-        // Placing new tool
+        // Placing new tool from panel - draggedTool won't have an ID yet
         const newTool: Tool = {
           ...dragState.draggedTool,
           id: generateToolId(),
